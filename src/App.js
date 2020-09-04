@@ -11,11 +11,28 @@ function App() {
   const [todos, setTodos]= useState([]);
   const [status, setStatus]= useState('all');
   const [filteredTodos, setFilteredTodos]= useState([]);
+//Localstorage
+const saveLocalStorage =()=>{
+  localStorage.setItem("todos", JSON.stringify(todos));
+}
+const getLocaleStorage=()=>{
+  if (localStorage.getItem("todos") === null){
+    localStorage.setItem("todos", JSON.stringify([]))
+  }else{
+    let todoLocale = JSON.parse(localStorage.getItem("todos"));
+    setTodos(todoLocale)
+  }
+}
+//UseEffect
+  useEffect(() => {
+  getLocaleStorage();
+},[])
 
-
-useEffect(() => {
+  useEffect(() => {
   filterHandler();
+  saveLocalStorage();
 },[status,todos])
+
 
 // function
 const filterHandler = () => {
